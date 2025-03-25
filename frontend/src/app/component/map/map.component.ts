@@ -192,6 +192,9 @@ export class MapComponent implements OnInit {
     );
   
     if (index !== -1 && mapMarkerArray[index]) {
+      this.infoWindow.options = {
+        maxWidth: 200
+      }
       this.infoWindow.open(mapMarkerArray[index]);
     }
   }

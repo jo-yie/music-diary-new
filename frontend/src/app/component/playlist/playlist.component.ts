@@ -187,6 +187,7 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
     if (index !== -1 && mapMarkerArray[index]) {
       this.infoWindow.open(mapMarkerArray[index]);
     }
+
   }
 
   playSong(marker: CustomMarker) {
@@ -198,6 +199,13 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
       next: () => console.log('Play request successful'),
       error: err => console.error('Play request failed:', err)
     });
+  }
+
+  onMapClick(event: google.maps.MapMouseEvent): void {
+
+    this.infoWindow.close();
+    this.selectedMarker = null;
+
   }
 
 }
