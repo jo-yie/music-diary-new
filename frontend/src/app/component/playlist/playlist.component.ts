@@ -201,6 +201,23 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
     });
   }
 
+  playSelectedSong() {
+
+    console.log(">>>Play Selected Song Clicked");
+
+    // TODO highlight the song playing somehow ??
+
+    if (this.selectedMarker !== null) {
+
+      this.spotifyService.playSong(this.user, this.spotifyService.getDeviceId(), this.selectedMarker.song.spotifyId).subscribe({
+        next: () => console.log('Play request successful'),
+        error: err => console.error('Play request failed:', err)
+      });
+
+    }
+
+  }
+
   onMapClick(event: google.maps.MapMouseEvent): void {
 
     this.infoWindow.close();
