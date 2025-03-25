@@ -2,7 +2,7 @@ import { Component, inject, OnInit, QueryList, ViewChild, ViewChildren, AfterVie
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlaylistService } from '../../service/playlist.service';
 import { SpotifyService } from '../../service/spotify.service';
-import { CustomMarker, Playlist } from '../../model/models';
+import { CustomMarker, Playlist, TrackObject } from '../../model/models';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 
 @Component({
@@ -21,6 +21,7 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
   songUrls: any;
   
   user!: string;
+  deviceId!: string;
   playlistId: any;
   playlist!: Playlist;
   isMapReady: boolean = false;
@@ -44,6 +45,8 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
   
   ngOnInit(): void {
     this.user = this.spotifyService.getUserInfo();
+    this.deviceId = this.spotifyService.getDeviceId();
+
     this.route.paramMap.subscribe(params => {
       this.playlistId = params.get('id');
       this.loadPlaylist();
@@ -185,4 +188,15 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
       this.infoWindow.open(mapMarkerArray[index]);
     }
   }
+
+  playSong(song: TrackObject) {
+
+    console.log(">>>Play Song Clicked: ", song);
+    // console.log(">>>Device Id: ", this.spotifyService.getDeviceId())
+    this.spotifyService.playSong(this.user, this.spotifyService.getDeviceId(), song.spotifyId).subscribe({
+      next: () => console.log('Play request successful'),
+      error: err => console.error('Play request failed:', err)
+    });
+  }
+
 }

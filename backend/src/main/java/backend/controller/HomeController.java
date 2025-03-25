@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -104,10 +105,25 @@ public class HomeController {
     public String searchForSong(@RequestParam String username, 
         String search) {
 
-        System.out.println("username: " + username);
-        System.out.println("search: " + search);
+        // System.out.println("username: " + username);
+        // System.out.println("search: " + search);
 
         return spotifyService.searchForSong(username, search);
+
+    }
+
+    @ResponseBody
+    @PutMapping("/spotify/play")
+    public void playSong(
+        @RequestParam String username, 
+        @RequestParam String deviceId, 
+        @RequestParam String trackId) {
+
+        System.out.println(">>>Device ID: " + deviceId);
+        System.out.println(">>>Track ID: " + trackId);
+        
+        System.out.println(">>>Play Song Called in Backend");
+        spotifyService.playSong(username, deviceId, trackId);
 
     }
     

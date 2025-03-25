@@ -30,7 +30,8 @@
           <div class="flex flex-col gap-4">
             <div 
                 *ngFor="let marker of playlist.markers" 
-                class="card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer">
+                class="card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
+                (click)="playSong(marker.song)">
                 <div class="card-body p-4">
                 <div class="flex items-center gap-4">
                     <img [src]="marker.song.imageUrl" class="w-16 h-16 rounded-md object-cover flex-shrink-0">

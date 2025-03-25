@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { Playlist } from '../model/models';
 
 @Injectable({
@@ -14,6 +14,7 @@ export class SpotifyService {
   private recentlyPlayedEndpoint = '/api/recently-played';
   private accessTokenEndpoint = '/api/access-token';
   private searchSongEndpoint = '/api/search';
+  private playSongEndpoint = '/api/spotify/play';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -64,6 +65,11 @@ export class SpotifyService {
     return userStr ? JSON.parse(userStr) : null
   }
 
+  getDeviceId(): any { 
+    const deviceStr = localStorage.getItem('deviceId')
+    return deviceStr ? JSON.parse(deviceStr) : null
+  }
+
   // check if user is logged in 
   isLoggedIn(): boolean { 
     return !!this.getUserInfo()
@@ -72,6 +78,7 @@ export class SpotifyService {
   // logout 
   logout(): void {
     localStorage.removeItem('user')
+    localStorage.removeItem('deviceId');
   }
 
   // 
@@ -82,6 +89,13 @@ export class SpotifyService {
       { params: { username, search } }
     );
 
+  }
+
+  playSong(username: string, deviceId: string, trackId: string) {
+    const url = `${this.playSongEndpoint}?username=${encodeURIComponent(username)}&deviceId=${encodeURIComponent(deviceId)}&trackId=${encodeURIComponent(trackId)}`;
+    
+    return this.httpClient.put(url, {});
+    
   }
 
 }

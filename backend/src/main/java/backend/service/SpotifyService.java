@@ -3,6 +3,9 @@ package backend.service;
 import java.io.StringReader;
 import java.time.Instant;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.json.JSONArray;
@@ -55,6 +58,9 @@ public class SpotifyService {
 
     @Value("${spotify.search.url}")
     private String searchUrl;
+
+    @Value("${spotify.play.url}")
+    private String playUrl; 
 
     @Value("${spotify.scope}")
     private String scope;
@@ -300,5 +306,27 @@ public class SpotifyService {
         return response.getBody();
 
     } 
+
+    public void playSong(String username, String deviceId, String trackId) {
+
+        String endpointUrl = playUrl + "?device_id=" + deviceId;
+
+        String trackUri = "spotify:track:" + trackId;
+
+        HttpHeaders headers = new HttpHeaders(); 
+        headers.setBearerAuth(getValidAccessToken(username));
+
+        Map<String, Object> requestBody = new HashMap<>(); 
+        requestBody.put("uris", Collections.singletonList(trackUri)); 
+
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
+
+        restTemplate.exchange(
+            endpointUrl, 
+            HttpMethod.PUT,
+            request,
+            String.class);
+
+    }
 
 }

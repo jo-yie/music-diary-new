@@ -106,6 +106,9 @@ export class SpotifyPlayerComponent implements OnInit, OnDestroy {
         console.log(">>>Ready with Device ID", device_id);
         this.deviceId = device_id;
 
+        // save to local storage 
+        localStorage.setItem('deviceId', JSON.stringify(this.deviceId));
+
         // transfer playback from device 
         this.transferPlaybackToDevice();
 
