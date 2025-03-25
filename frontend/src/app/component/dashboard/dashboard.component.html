@@ -93,9 +93,30 @@
               </div>
               <h2 class="card-title">Your Playlists</h2>
 
-              <div *ngFor="let playlist of playlists">
-                <p>{{ playlist.playlistId }}</p>
-                <p>{{ playlist.playlistName }}</p>
+              <!-- Horizontal scrolling container -->
+              <div class="flex overflow-x-auto gap-4 pb-4 -mx-4 px-4">
+                <div 
+                  *ngFor="let playlist of playlists" 
+                  [routerLink]="['/dashboard/playlist', playlist.playlistId]"
+                  class="card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer flex-shrink-0 w-64">
+                  <div class="card-body p-4">
+                    <div class="flex items-center gap-4">
+                      <!-- Placeholder or actual playlist image -->
+                      <div class="w-16 h-16 rounded-md bg-base-300 flex items-center justify-center flex-shrink-0">
+                        <img src="my-gif.gif">
+                        <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-base-content/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                        </svg> -->
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <h4 class="font-bold line-clamp-1">{{ playlist.playlistName }}</h4>
+                        <!-- <p class="text-sm text-base-content/80">
+                          {{ playlist.songs?.length || 0 }} songs
+                        </p> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <!-- <app-playlists></app-playlists> -->
