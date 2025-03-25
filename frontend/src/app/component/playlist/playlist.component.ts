@@ -189,11 +189,12 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
     }
   }
 
-  playSong(song: TrackObject) {
+  playSong(marker: CustomMarker) {
 
-    console.log(">>>Play Song Clicked: ", song);
-    // console.log(">>>Device Id: ", this.spotifyService.getDeviceId())
-    this.spotifyService.playSong(this.user, this.spotifyService.getDeviceId(), song.spotifyId).subscribe({
+    console.log(">>>Play Song Clicked");
+    this.openInfoWindow(marker);
+
+    this.spotifyService.playSong(this.user, this.spotifyService.getDeviceId(), marker.song.spotifyId).subscribe({
       next: () => console.log('Play request successful'),
       error: err => console.error('Play request failed:', err)
     });
