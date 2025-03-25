@@ -1,0 +1,80 @@
+<!-- <div>
+    <form [formGroup]="form" (submit)="processForm()">
+        <input type="text"
+            formControlName="search">
+        <button type="submit"
+            [disabled]="form.invalid">
+            Search
+        </button>
+    </form>
+</div> -->
+
+<div class="w-full">
+    <!-- Search Form - Full Width -->
+    <form [formGroup]="form" (submit)="processForm()" class="w-full mb-6">
+      <div class="join w-full">
+        <div class="flex-grow">
+          <label class="input input-bordered flex items-center gap-2 join-item w-full">
+            <svg class="h-4 w-4 opacity-70" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </g>
+            </svg>
+            <input type="search" class="grow" placeholder="Search for a song..." formControlName="search">
+          </label>
+        </div>
+        <button class="btn btn-neutral join-item" type="submit" [disabled]="form.invalid">Search</button>
+      </div>
+    </form>
+  
+    <!-- Added Songs Section -->
+    <!-- <div *ngIf="addedSongs.length > 0" class="mb-8">
+      <h3 class="text-lg font-semibold mb-4">Selected Song</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div *ngFor="let song of addedSongs" class="card bg-base-200 shadow-md hover:shadow-lg transition-shadow">
+          <div class="card-body p-4">
+            <div class="flex items-start gap-4">
+              <img [src]="song.imageUrl" class="w-16 h-16 rounded-md object-cover">
+              <div class="flex-1">
+                <h4 class="font-bold line-clamp-1">{{ song.trackName }}</h4>
+                <p class="text-sm text-base-content/80 line-clamp-2">
+                  {{ song.artist.join(', ') }}
+                </p>
+              </div>
+            </div>
+            <div class="card-actions justify-end mt-2">
+              <button (click)="removeSong(song)" class="btn btn-sm btn-error">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  
+    <!-- Search Results Section -->
+    <div *ngIf="searchResult" class="mt-6">
+        <h3 class="text-lg font-semibold mb-4">Search Results</h3>
+        <div class="flex flex-col gap-4">
+        <div 
+            *ngFor="let item of searchResult.tracks.items" 
+            class="card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
+            (click)="addSong(item)"
+        >
+            <div class="card-body p-4">
+            <div class="flex items-center gap-4">
+                <img [src]="item.album.images[0].url" class="w-16 h-16 rounded-md object-cover flex-shrink-0">
+                <div class="flex-1 min-w-0">
+                <h4 class="font-bold line-clamp-1">{{ item.name }}</h4>
+                <p class="text-sm text-base-content/80 line-clamp-1" *ngFor="let artist of item.artists">
+                    {{ artist.name }}
+                </p>
+                </div>
+                <!-- <div class="card-actions">
+                <button class="btn btn-sm btn-success">Add</button>
+                </div> -->
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

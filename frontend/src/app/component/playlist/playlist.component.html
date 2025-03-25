@@ -1,0 +1,123 @@
+<!-- <p>playlist works!</p>
+<p>Playlist ID: {{ playlistId }}</p> -->
+<!-- <div *ngFor="let marker of playlist.markers">
+  <p>{{ marker.id }}</p>
+  <p>{{ marker.title }}</p>
+  <p>{{ marker.message }}</p>
+  <p>{{ marker.position.lng }}</p>
+  <p>{{ marker.position.lat }}</p>
+  <p>{{ marker.song.trackName }}</p>
+</div> -->
+
+
+<div class="w-full space-y-6">
+    <!-- Header -->
+    <h2 class="text-3xl font-bold text-primary">Your Playlist</h2>
+
+    <!-- Playlist Title and Description -->
+    <div class="card bg-base-200 shadow-md">
+      <div class="card-body space-y-4">
+        <h3 class="text-2xl font-semibold text-base-content mb-2">{{ playlist.playlistName }}</h3>
+        <p class="text-lg text-base-content/80">{{ playlist.playlistDescription }}</p>
+      </div>
+    </div>
+
+      <!-- Selected Songs List -->
+      <div *ngIf="playlist.markers.length" class="card bg-base-200 shadow-md">
+        <div class="card-body">
+          <h3 class="text-xl font-semibold mb-3">Selected Songs</h3>
+  
+          <div class="flex flex-col gap-4">
+            <div 
+                *ngFor="let marker of playlist.markers" 
+                class="card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer">
+                <div class="card-body p-4">
+                <div class="flex items-center gap-4">
+                    <img [src]="marker.song.imageUrl" class="w-16 h-16 rounded-md object-cover flex-shrink-0">
+                    <div class="flex-1 min-w-0">
+                    <h4 class="font-bold line-clamp-1">{{ marker.song.trackName }}</h4>
+                    <p class="text-sm text-base-content/80 line-clamp-1" *ngFor="let artist of marker.song.artist">
+                        {{ artist }}
+                    </p>
+                    </div>
+                    <!-- <div class="card-actions">
+                    <button class="btn btn-sm btn-success">Add</button>
+                    </div> -->
+                </div>
+                </div>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+
+  <!-- Only show map when markers are ready -->
+  <div *ngIf="isMapReady; else loadingMap" class="w-full h-[500px] rounded-box overflow-hidden shadow-lg">
+    <google-map
+      [options]="options"
+      (mapInitialized)="onMapInitialized()"
+      width="w-full">
+
+      <map-marker *ngFor="let marker of playlist.markers"
+        [position]="marker.position"
+        [options]="marker.options"
+        [title]="marker.title"
+        (mapClick)="openInfoWindow(marker)">
+      </map-marker>
+
+      <map-info-window #infoWindow class="info-window bg-base-100 p-4 rounded-lg shadow-lg max-w-xs">
+        <div style="width: 100px;">
+          <h1 class="text-xl font-bold text-primary mb-2">{{ selectedMarker?.title }}</h1>
+          <p class="text-base-content mb-3">{{ selectedMarker?.message }}</p>
+          <div *ngIf="selectedMarker?.song" class="mt-3">
+            <img [src]="selectedMarker?.song?.imageUrl" width="100" class="rounded-md mb-2">
+            <p class="font-semibold text-accent">{{ selectedMarker?.song?.trackName }}</p>
+            <p class="text-sm text-base-content/80">{{ selectedMarker?.song?.artist?.join(', ') }}</p>
+          </div>
+        </div>
+      </map-info-window>
+
+    </google-map>
+
+  </div>
+
+  <ng-template #loadingMap>
+    <div class="w-full h-[500px] flex items-center justify-center bg-base-200 rounded-box">
+      <span class="loading loading-spinner loading-lg text-primary"></span>
+      <p class="ml-4 text-lg">Loading map...</p>
+    </div>
+  </ng-template>
+
+  <!-- Has Generated Songs -->
+  <div class="card bg-base-200 shadow-md" *ngIf="hasSongs === true">
+    <div class="card-body space-y-4">
+    <h3 class="text-2xl font-semibold text-base-content mb-2">Generated Songs</h3>
+    
+      <div *ngFor="let url of songUrls">
+        <div *ngIf="url === 'Song not found'; else audioPlayer">
+            <p>Song not found</p>
+        </div>
+
+        <ng-template #audioPlayer>
+            <audio controls>
+                <source [src]="url">
+                Your browser does not support the audio element.
+            </audio>
+        </ng-template>
+    </div>
+    </div>
+  </div>
+
+  <!-- Generate Song -->
+  <div class="card bg-base-200 shadow-md" *ngIf="hasSongs === false">
+    <div class="card-body space-y-4">
+      <h3 class="text-2xl font-semibold text-base-content mb-2">Generate Custom Songs</h3>
+
+      <app-generate-song [playlist]="playlist">
+
+      </app-generate-song>
+
+    </div>
+  </div>
+
+</div>

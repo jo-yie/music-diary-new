@@ -1,0 +1,63 @@
+<div class="p-6 bg-base-100 rounded-lg shadow-md">
+    <form [formGroup]="form" (submit)="processForm()" class="space-y-6">
+      <div class="space-y-4">
+        <button 
+          (click)="generateLyrics()" 
+          [disabled]="lyricsLoaded" 
+          class="btn btn-primary"
+        >
+          Generate Lyrics
+        </button>
+        
+        <div *ngIf="lyricsLoading" class="flex items-center space-x-2 text-info">
+          <span class="loading loading-spinner loading-sm"></span>
+          <span>Loading lyrics...</span>
+        </div>
+        
+        <div *ngIf="lyricsLoaded" class="space-y-2">
+          <p class="text-sm text-base-content/70">
+            Feel free to edit these lyrics as you wish!
+          </p>
+          <mat-form-field class="w-full">
+            <textarea 
+              matInput 
+              formControlName="lyricsValue" 
+              rows="10"
+              cdkTextareaAutosize
+              class="w-full p-2 border rounded-md"
+            ></textarea>
+          </mat-form-field>
+        </div>        
+      </div>
+  
+      <button 
+        type="submit" 
+        class="btn btn-primary w-full" 
+        [hidden]="form.invalid" 
+        [disabled]="form.invalid"
+      >
+        Generate Song
+      </button>
+    </form>
+  
+    <div *ngIf="songLoading" class="mt-6 flex items-center space-x-2 text-info">
+      <span class="loading loading-spinner loading-sm"></span>
+      <span>Generating song...</span>
+    </div>
+  </div>
+
+<div *ngIf="songLoaded">
+    <div *ngFor="let url of songUrls">
+        <div *ngIf="url === 'Song not found'; else audioPlayer">
+            <p>Song not found</p>
+        </div>
+
+        <ng-template #audioPlayer>
+            <audio controls>
+                <source [src]="url">
+                Your browser does not support the audio element.
+            </audio>
+        </ng-template>
+
+    </div>
+</div>

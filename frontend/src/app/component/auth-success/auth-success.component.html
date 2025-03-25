@@ -1,0 +1,35 @@
+<!-- <p>auth-success works!</p> -->
+
+<!-- auth-success.component.html -->
+<!-- <div class="auth-container">
+    <div class="auth-card">
+      <div *ngIf="loading && !error">
+        <h2>Authentication Successful!</h2>
+        <p>You've successfully connected to Spotify</p>
+        <div class="spinner"></div>
+        <p class="redirect-text">Redirecting to your dashboard...</p>
+        <a href="/dashboard">Dashboard</a>
+    </div>
+      
+    <div *ngIf="error">
+        <h2>Authentication Error</h2>
+        <p class="error-message">{{ error }}</p>
+        <button class="retry-button" routerLink="/">Back to Login</button>
+      </div>
+    </div>
+</div> -->
+
+<div class="hero bg-base-200 min-h-screen">
+  <div class="hero-content text-center">
+    <div class="max-w-md">
+      <img src="my-gif.gif" alt="Cool animation" width="150" height="150" class="mx-auto">
+      <h1 class="text-5xl font-bold">Authentication Successful</h1>
+      <p class="py-6">
+        Redirecting you to your dashboard... 
+      </p>
+      <button class="btn btn-primary" routerLink="/dashboard">
+        Click here if you're not redirected
+      </button>
+    </div>
+  </div>
+</div>

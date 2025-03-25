@@ -1,0 +1,164 @@
+<!-- <h2 class="card-title">Create Playlist</h2> -->
+
+<!-- <div>
+    <form [formGroup]="playlistForm" (submit)="processPlaylistForm()">
+        
+        <label><h1>Playlist Name:</h1></label>
+        <input type="text" formControlName="playlistName">
+        <br/>
+
+        <label><h2>Playlist Description:</h2></label>
+        <input type="text" formControlName="playlistDescription">
+        <button type="submit" [disabled]="!isPlaylistValid()">Create Playlist</button>
+    </form>
+</div> -->
+
+<div class="w-full space-y-6">
+    <!-- Header -->
+    <h2 class="text-3xl font-bold text-primary">Create Playlist</h2>
+  
+    <!-- Main Form Section -->
+    <div class="card bg-base-200 shadow-md">
+      <div class="card-body space-y-4">
+        <form class="space-y-4" [formGroup]="playlistForm" (submit)="processPlaylistForm()">
+          <!-- Angular Material Form Fields - isolated with custom class -->
+          <div class="material-form-container">
+            <mat-form-field class="example-full-width w-full">
+              <mat-label>Playlist Name</mat-label>
+              <input matInput type="text" formControlName="playlistName">
+            </mat-form-field>
+  
+            <mat-form-field class="example-full-width w-full">
+              <mat-label>Playlist Description</mat-label>
+              <textarea matInput 
+                       formControlName="playlistDescription" rows="3"></textarea>
+            </mat-form-field>
+          </div>
+  
+          <!-- Daisy UI Button -->
+          <button class="btn btn-primary w-full md:w-auto" type="submit" [disabled]="!isPlaylistValid()">
+            Create Playlist
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Selected Songs List -->
+    <div *ngIf="markers.length > 0" class="card bg-base-200 shadow-md">
+      <div class="card-body">
+        <h3 class="text-xl font-semibold mb-3">Selected Songs</h3>
+
+        <div class="flex flex-col gap-4">
+          <div 
+              *ngFor="let marker of markers" 
+              class="card bg-base-100 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer">
+              <div class="card-body p-4">
+              <div class="flex items-center gap-4">
+                  <img [src]="marker.song.imageUrl" class="w-16 h-16 rounded-md object-cover flex-shrink-0">
+                  <div class="flex-1 min-w-0">
+                  <h4 class="font-bold line-clamp-1">{{ marker.song.trackName }}</h4>
+                  <p class="text-sm text-base-content/80 line-clamp-1" *ngFor="let artist of marker.song.artist">
+                      {{ artist }}
+                  </p>
+                  </div>
+                  <!-- <div class="card-actions">
+                  <button class="btn btn-sm btn-success">Add</button>
+                  </div> -->
+              </div>
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  
+    <!-- Map Section -->
+    <div class="w-full h-[500px] rounded-box overflow-hidden shadow-lg">
+
+        <google-map
+        [options]="options" 
+        (mapClick)="onMapClick($event)"
+        width="w-full">
+
+        <map-marker *ngFor="let marker of markers" 
+            [position]="marker.position" 
+            [options]="marker.options"
+            [title]="marker.title"
+            (mapClick)="openInfoWindow(marker)">
+        </map-marker>
+
+        <map-info-window #infoWindow class="info-window">
+            <h1>{{ selectedMarker?.title }}</h1>
+            <p>{{ selectedMarker?.message }}</p>
+
+            <div *ngIf="selectedMarker?.song">
+                <img [src]="selectedMarker?.song?.imageUrl" width="100">
+                <p><strong>{{ selectedMarker?.song?.trackName }}</strong></p>
+                <p>{{ selectedMarker?.song?.artist?.join(', ') }}</p>
+            </div>
+
+            <button (click)="editMarkerMessage()">Edit</button>
+            <button (click)="deleteMarker()">Delete</button>
+        </map-info-window>
+
+        </google-map>
+
+    </div>
+  
+    <!-- Marker Form (Conditional) -->
+    <div *ngIf="addingNewMarker" class="card bg-base-200 shadow-md">
+      <div class="card-body space-y-4">
+        <h3 class="text-xl font-semibold">{{ selectedMarker ? 'Edit Marker' : 'Add New Marker' }}</h3>
+        
+        <form [formGroup]="form" (submit)="processForm()" class="space-y-4">
+          <!-- Isolated Material Form Fields -->
+          <div class="material-form-container">
+            <mat-form-field class="example-full-width w-full">
+              <mat-label>Title</mat-label>
+              <input matInput type="text" formControlName="title">
+            </mat-form-field>
+  
+            <mat-form-field class="example-full-width w-full">
+              <mat-label>Message</mat-label>
+              <textarea rows="3" matInput type="text" formControlName="message">
+                </textarea>
+            </mat-form-field>
+          </div>
+
+
+          <div *ngIf="selectedSong" class="alert alert-success shadow-lg">
+            <div class="flex items-center gap-3">
+              <!-- Album Art - Adjusted Size -->
+              <img [src]="selectedSong.imageUrl" 
+                   class="w-12 h-12 rounded-md object-cover flex-shrink-0">
+              
+              <!-- Success Icon and Text -->
+              <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="text-sm">
+                  Selected Song: <strong class="line-clamp-1">{{ selectedSong.trackName }}</strong> 
+                  <span class="text-xs opacity-80">{{ selectedSong.artist.join(' , ') }}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <br />
+
+  
+          <div class="flex flex-wrap gap-3">
+            <button type="submit" class="btn btn-primary flex-grow" [disabled]="!isFormValid()">Save</button>
+            <button type="button" (click)="cancelMarker()" class="btn btn-outline">Cancel</button>
+          </div>
+        </form>
+
+        <div class="divider">Add Song to Marker</div>
+        
+        <app-add-song (songSelected)="onSongSelected($event)"></app-add-song>
+        
+      </div>
+    </div>
+  </div>
+  

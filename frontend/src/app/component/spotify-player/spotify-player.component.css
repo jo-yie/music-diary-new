@@ -1,0 +1,17 @@
+/* Spin animation */
+@keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .spin {
+    animation: spin 10s linear infinite; /* 4 seconds per full rotation */
+  }
+  
+  .mask-circle {
+    transition: animation 0.3s ease; /* Smooth transition when starting/stopping */
+  }

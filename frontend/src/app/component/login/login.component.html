@@ -1,0 +1,35 @@
+<!-- <p>login works!</p> -->
+
+<!-- login.component.html -->
+<!-- <div class="login-container">
+    <div class="login-card">
+      <h1>Music App</h1>
+      <p>Connect with your Spotify account to get started</p>
+      
+      <div *ngIf="isLoading" class="loading">
+        Loading...
+      </div>
+      
+      <div *ngIf="!isLoading">
+        <a [href]="authUrl" class="spotify-button">
+          Login with Spotify
+        </a>
+      </div>
+    </div>
+</div> -->
+
+<div class="hero bg-base-200 min-h-screen">
+  <div class="hero-content text-center">
+    <div class="max-w-md">
+      <img src="my-gif.gif" alt="Cool animation" width="150" height="150" class="mx-auto">
+      <h1 class="text-5xl font-bold">Welcome to your Music Diary</h1>
+      <p class="py-6">
+        Keep track of your favourite tracks, track your listening activity in your favourite places & create your own tracks, 
+      </p>
+      <button class="btn btn-primary" (click)="loginWithSpotify()">
+        <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_White.png" width="25">
+        Login with Spotify
+      </button>
+    </div>
+  </div>
+</div>
