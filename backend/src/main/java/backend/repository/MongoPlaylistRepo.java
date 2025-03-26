@@ -132,4 +132,28 @@ public class MongoPlaylistRepo {
 
     }
 
+    // db.songs.findOne(
+    //     { playlist_id: "5f861be7", username: "mojojojothecheesepotato" }, 
+    //     { _id: 0, lyrics: 1 }
+    // )
+
+    public String getSongLyrics(String playlistId, String username) {
+
+        Criteria criteria = new Criteria()
+            .where("playlist_id").is(playlistId)
+            .and("username").is(username);
+
+        Query query = new Query().addCriteria(criteria);
+        query.fields().exclude("_id").include("lyrics");
+
+        Document document = template.findOne(
+            query, 
+            Document.class,
+            "songs"
+        );
+
+        return document.getString("lyrics");
+
+    }
+
 }

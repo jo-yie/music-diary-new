@@ -16,6 +16,7 @@ export class PlaylistService {
   private generateLyricsEndpoint = '/api/generate/lyrics'
   private generateSongsEndpoint = '/api/generate/songs'
   private getSongsEndpoint = '/api/get/songs'
+  private getSongLyricsEndpoint = '/api/get/lyrics'
 
   // send playlist to backend in map
   savePlaylist(username: string, playlist: Playlist ) {
@@ -56,7 +57,7 @@ export class PlaylistService {
       `${this.generateLyricsEndpoint}`, 
       { 
         params: { username, playlistId },
-        responseType: 'text' // Specify that the response is plain text
+        responseType: 'text' // response is plain text
       }
     )
 
@@ -81,6 +82,19 @@ export class PlaylistService {
       {
         params: { username, playlistId }
       }
+    )
+
+  }
+
+  getSongLyrics(username: string, playlistId: string): Observable<string> {
+
+    return this.httpClient.get(
+      `${this.getSongLyricsEndpoint}`,
+      {
+        params: { username, playlistId },
+        responseType: 'text' // response is plain text
+      }
+
     )
 
   }

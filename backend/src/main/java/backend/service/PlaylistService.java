@@ -374,7 +374,7 @@ public class PlaylistService {
                     }
                 }
     
-                Thread.sleep(2000); // Wait before retrying
+                Thread.sleep(3000); // Wait before retrying
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -421,6 +421,12 @@ public class PlaylistService {
         }
 
         return songUrls;
+
+    }
+    
+    public String getSongLyrics(String username, String playlistId) {
+
+        return mongoPlaylistRepo.getSongLyrics(playlistId, username);
 
     }
 

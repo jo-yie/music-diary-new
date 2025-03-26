@@ -19,6 +19,8 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
 
   hasSongs = false;
   songUrls: any;
+  songLyrics: string = '';
+  songImageUrls: any;
   
   user!: string;
   deviceId!: string;
@@ -59,11 +61,30 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
           console.log(">>>Song Url Response: ", this.songUrls); 
           console.log(">>>this.songUrls: ", this.songUrls);
 
+          // convert each audio URL to an image URL
+          this.songImageUrls = this.songUrls.map((url: string) => 
+            url.replace('/audio/', '/image/').replace('.m4a', '.jpg')
+          );
+
           // check if songs is empty 
           if (this.songUrls.length === 0) {
             this.hasSongs = false; 
+
           } else { 
             this.hasSongs = true;
+
+            this.playlistService.getSongLyrics(this.user, this.playlistId)
+            .subscribe({
+              next: value => {
+                this.songLyrics = value
+                console.log(">>>Lyrics: ", this.songLyrics)
+
+              }, 
+              error: err => {
+                console.log(">>>Error: ", err);
+              }
+            })
+
           }
           console.log(">>>HAS SONGS: ", this.hasSongs);
 

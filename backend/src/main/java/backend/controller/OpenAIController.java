@@ -1,6 +1,7 @@
 package backend.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -61,5 +62,15 @@ public class OpenAIController {
         return ResponseEntity.ok().body(songUrls);
 
     }
+
+    @GetMapping("/api/get/lyrics")
+    public ResponseEntity<Object> getMethodName(@RequestParam String username, @RequestParam String playlistId) {
+
+        String lyrics = playlistService.getSongLyrics(username, playlistId); 
+
+        return ResponseEntity.ok().body(lyrics);
+
+    }
+    
     
 }
