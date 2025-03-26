@@ -28,6 +28,8 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
   playlist!: Playlist;
   isMapReady: boolean = false;
   isMapBoundsFitted: boolean = false;
+
+  currentView: string = 'all';
   
   @ViewChild(GoogleMap) map!: GoogleMap;
   @ViewChild(MapInfoWindow) infoWindow!: MapInfoWindow;
@@ -53,6 +55,10 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
       this.playlistId = params.get('id');
       this.loadPlaylist();
     });
+
+    this.route.queryParamMap.subscribe(params => {
+      this.currentView = params.get('view') || 'all';
+    })
 
     this.playlistService.getSongs(this.user, this.playlistId)
       .subscribe({
@@ -96,6 +102,14 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
     )
 
   }
+
+  changeView(view: string) {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { view }, 
+      queryParamsHandling: 'merge'
+    })
+  }
   
   ngAfterViewInit(): void {
     // Check if data was loaded before view initialized
@@ -125,6 +139,7 @@ export class PlaylistComponent implements OnInit, AfterViewInit {
         error: err => {
           if (err.status === 404) {
             alert("Playlist not found!");
+            this.router.navigate(['/dashboard']);
           }
           console.log(">>>Error: ", err);
         }
