@@ -1,3 +1,6 @@
+-- use database 
+USE final_project;
+
 CREATE TABLE playlists (
 
     playlist_id VARCHAR(8) NOT NULL, -- primary key 

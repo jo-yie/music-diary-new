@@ -1,3 +1,12 @@
+-- drop database if exits 
+DROP DATABASE IF EXISTS final_project; 
+
+-- create database 
+CREATE DATABASE final_project; 
+
+-- use database 
+USE final_project;
+
 CREATE TABLE users (
 
     user_id INT AUTO_INCREMENT, 

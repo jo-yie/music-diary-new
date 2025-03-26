@@ -3,6 +3,7 @@ package backend.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +28,17 @@ public class HomeController {
     private SpotifyService spotifyService;
 
     // TODO how to not hardcode these 
-    private String authError = "http://localhost:4200/auth-error?error=";
-    private String authSuccess = "http://localhost:4200/auth-success?data=";
+    // private String authError = "http://localhost:4200/auth-error?error=";
+    // private String authSuccess = "http://localhost:4200/auth-success?data=";
+
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
+    @Value("${auth.error.path}")
+    private String authErrorPath;
+
+    @Value("${auth.success.path}")
+    private String authSuccessPath;
 
     // @GetMapping("/")
     // public String home(Model model) { 
@@ -62,15 +72,15 @@ public class HomeController {
             spotifyService.saveUserToRepo(user);
 
             // Convert user object to JSON
-            ObjectMapper mapper = new ObjectMapper();
-            String userJson = mapper.writeValueAsString(user);
+            // ObjectMapper mapper = new ObjectMapper();
+            // String userJson = mapper.writeValueAsString(user);
             // String encodedUserData = Base64.getEncoder().encodeToString(userJson.getBytes(StandardCharsets.UTF_8));
         
             // Redirect to frontend with the user data
-            response.sendRedirect(authSuccess + user.getUsername());
+            response.sendRedirect(frontendUrl + authSuccessPath + user.getUsername());
 
         } catch (Exception e) { 
-            response.sendRedirect(authError + e.getMessage());
+            response.sendRedirect(frontendUrl + authErrorPath + e.getMessage());
         }
 
         // return ResponseEntity.ok().body(user);

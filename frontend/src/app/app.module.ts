@@ -17,6 +17,7 @@ import { PlaylistComponent } from './component/playlist/playlist.component';
 import { PlaylistsComponent } from './component/playlists/playlists.component';
 import { GenerateSongComponent } from './component/generate-song/generate-song.component';
 import { MaterialModule } from './module/material.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -39,8 +40,8 @@ import { MaterialModule } from './module/material.module';
     ReactiveFormsModule,
     GoogleMapsModule,
     FormsModule,
-    MaterialModule
-],
+    MaterialModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
