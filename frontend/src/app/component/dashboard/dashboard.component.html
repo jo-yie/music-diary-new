@@ -70,9 +70,9 @@
                       </div>
                       <div class="flex-1 min-w-0">
                         <h4 class="font-bold line-clamp-1">{{ playlist.playlistName }}</h4>
-                        <!-- <p class="text-sm text-base-content/80">
-                          {{ playlist.songs?.length || 0 }} songs
-                        </p> -->
+                        <p class="text-sm text-base-content/80 whitespace-nowrap overflow-hidden text-ellipsis">
+                          {{ playlist.playlistDescription }}
+                        </p>
                       </div>
                     </div>
                   </div>
