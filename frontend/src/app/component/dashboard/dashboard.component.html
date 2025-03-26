@@ -63,7 +63,7 @@
                     <div class="flex items-center gap-4">
                       <!-- Placeholder or actual playlist image -->
                       <div class="w-16 h-16 rounded-md bg-base-300 flex items-center justify-center flex-shrink-0">
-                        <img src="my-gif.gif">
+                        <img src="music-note.gif">
                         <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-base-content/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
                         </svg> -->
@@ -90,7 +90,9 @@
             <div class="card-body">
               <div class="card-actions justify-end">
                 <!-- <button class="btn btn-primary" [routerLink]="['/dashboard/playlist']" (click)="close()">Close</button> -->
-                <button class="btn btn-circle" [routerLink]="['/dashboard/playlist']" (click)="close()">X</button>
+                <button class="btn btn-circle" [routerLink]="['/dashboard/playlist']" (click)="close()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
               </div>
               <!-- <h2 class="card-title">Playlist:</h2> -->
   
